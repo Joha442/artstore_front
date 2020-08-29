@@ -1,11 +1,16 @@
 <template>
-  <form @submit.prevent="checkout">
-    <input type="text" v-model="address" placeholder="Address" />
-    <input type="text" v-model="country" placeholder="Country" />
-    <input type="text" v-model="city" placeholder="City" />
-    <input type="text" v-model="postcode" placeholder="Post Code" />
-    <button>Finish</button>
-  </form>
+  <div>
+    <div class="left"></div>
+    <div class="right">
+      <form @submit.prevent="checkout">
+        <input type="text" v-model="address" placeholder="Address" class="forms" />
+        <input type="text" v-model="country" placeholder="Country" class="forms" />
+        <input type="text" v-model="city" placeholder="City" class="forms" />
+        <input type="text" v-model="postcode" placeholder="Post Code" class="forms" />
+        <button class="forms button">Finish</button>
+      </form>
+    </div>
+  </div>
 </template>
 <script>
 import axios from "axios";
@@ -35,4 +40,7 @@ export default {
   },
 };
 </script>
-<style scoped></style>
+<style scoped>
+.right {
+}
+</style>

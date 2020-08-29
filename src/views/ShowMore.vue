@@ -13,7 +13,7 @@ export default {
   components: {
     Comments,
   },
-  data: function () {
+  data: function() {
     return {
       pro_id: this.$route.params.pro_id,
     };

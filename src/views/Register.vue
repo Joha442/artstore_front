@@ -11,10 +11,9 @@
 </template>
 <script>
 import axios from "axios";
-import router from "../router";
 
 export default {
-  data: function () {
+  data: function() {
     return {
       username: "",
       password: "",
@@ -32,7 +31,7 @@ export default {
             password: this.password,
           })
           .then((res) => {
-            router.push("/");
+            console.log(res);
           });
       } else {
         this.error = "Passwords don't match";

@@ -37,12 +37,13 @@ export default {
 <style>
 .forms {
   display: block;
-  margin-bottom: 10px;
+  margin: 10px;
   padding: 5px;
   width: 250px;
   height: 25px;
-  background-color: rgb(172, 226, 172);
-  border: rgb(172, 226, 172) 1px solid;
+  background-color: rgba(56, 21, 13, 0.274);
+  /* background-color: rgb(172, 226, 172); */
+  border: rgba(56, 21, 13, 0.068) 1px solid;
 }
 .button {
   width: 263px;
