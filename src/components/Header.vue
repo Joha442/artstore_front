@@ -1,35 +1,39 @@
 <template>
   <div class="header">
     <div class="logo">
-      <img class="logo" src="../assets/logo.png" alt="logo-slika" />
-    </div>
-    <!--end logo-->
-    <div class="quote">
-      <p>"The Earth without art is just eh"</p>
+      <router-link to="/">
+        <img class="logo" src="../assets/logo.png" alt="logo-slika" />
+      </router-link>
     </div>
     <div id="nav">
-      <router-link to="/">Home</router-link> | <span @click="login">Login </span> |
-      <span @click="register">Register</span> |
-      <!-- <router-link to="/login">login</router-link> |
-        <router-link to="/register">register</router-link> |-->
-      <router-link to="/order">Order</router-link>
+      <router-link to="/">
+        <i class="fas fa-house-user"></i>
+      </router-link>
+      <span v-if="!loggedInUserId" @click="$emit('open-modal', 'login')">
+        |
+        <i class="fas fa-user"></i> Prijava |
+      </span>
+      <span v-if="!loggedInUserId" @click="$emit('open-modal', 'register')">
+        <i class="fas fa-user-plus"></i> Registracija |
+      </span>
+      <span v-if="loggedInUserId" @click="$emit('open-modal', 'logout')">
+        &nbsp;|
+        <i class="fas fa-user-alt"></i> Odjavi se |
+      </span>
+      <router-link to="/order">
+        <i class="fas fa-shopping-cart"></i>
+      </router-link>
     </div>
   </div>
 </template>
 
 <script>
 export default {
-  data: function() {
+  data: function () {
     return {};
   },
-  methods: {
-    login() {
-      console.log("aa");
-    },
-    register() {
-      console.log("aa");
-    },
-  },
+  props: ["user", "loggedInUserId"],
+  methods: {},
 };
 </script>
 
@@ -42,18 +46,17 @@ export default {
   align-items: center;
   align-content: center;
 }
-
 #nav {
   padding: 30px;
 }
-
 #nav a {
-  font-weight: bold;
+  font-size: 20px;
   color: #ffffff;
+  text-decoration: none;
 }
 
 #nav a.router-link-exact-active {
-  color: #72dfae;
+  color: rgb(23, 112, 112);
 }
 .logo img {
   max-width: 200px;
@@ -61,10 +64,9 @@ export default {
 .logo {
   margin-left: 5px;
 }
-.quote p {
+span {
   color: rgb(255, 255, 255);
   font-size: 20px;
-  font-family: cursive;
-  font-style: italic;
+  cursor: pointer;
 }
 </style>

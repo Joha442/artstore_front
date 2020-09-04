@@ -7,28 +7,21 @@
 </template>
 
 <script>
-// <PopUp :show="show" :form:"whichForm">
-// Njena Unutrasnjost...
-
-// template
-//   Login v-if form=login
-//   Register    vif form=register
-//   Logout    vif form=logout
 import axios from "axios";
 import Product from "../components/Product.vue";
-import LoginVue from "./Login.vue";
+import Login from "../components/Login.vue";
 
 export default {
   name: "Home",
   components: {
     Product,
   },
-  data: function() {
+  data: function () {
     return {
       products: [],
     };
   },
-  created: function() {
+  created: function () {
     axios.get("http://localhost:3000/products").then((res) => {
       this.products = res.data.data;
     });
@@ -39,15 +32,9 @@ export default {
 .home {
   width: 1200px;
   margin: 50px auto;
-  /* display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  justify-content: space-around; */
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
-
   justify-items: center;
-  gap: 40px 40px;
-  /* margin: 50px 40px 200px 0px; */
+  grid-gap: 50px 30px;
 }
 </style>

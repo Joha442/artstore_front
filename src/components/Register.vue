@@ -1,11 +1,14 @@
 <template>
   <div>
     <form @submit.prevent="register">
+      <h1>
+        <i class="fas fa-user-plus"></i>
+      </h1>
       <input type="text" v-model="username" placeholder="Username" class="forms" />
       <input type="password" v-model="password" placeholder="Password" class="forms" />
       <input type="password" v-model="confirmPassword" placeholder="Confirm Password" class="forms" />
       <p v-if="error" class="error">{{ error }}</p>
-      <button type="submit" class="forms button">Register</button>
+      <button type="submit" class="forms button">REGISTRACIJA</button>
     </form>
   </div>
 </template>
@@ -13,7 +16,7 @@
 import axios from "axios";
 
 export default {
-  data: function() {
+  data: function () {
     return {
       username: "",
       password: "",
@@ -32,6 +35,7 @@ export default {
           })
           .then((res) => {
             console.log(res);
+            this.$emit("open-login");
           });
       } else {
         this.error = "Passwords don't match";

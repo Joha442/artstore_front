@@ -1,14 +1,14 @@
 <template>
   <form @submit.prevent="addComment">
-    <textarea type="text" v-model="comment" />
-    <button type="submit">Post</button>
+    <input type="text" v-model="comment" />
+    <button :disabled="!comment.length" type="submit">Post</button>
   </form>
 </template>
 
 <script>
 import axios from "axios";
 export default {
-  data: function() {
+  data: function () {
     return {
       comment: "",
     };
@@ -24,8 +24,8 @@ export default {
           com_content: this.comment,
         })
         .then((res) => {
-          console.log(res.data);
           this.$emit("comment-added");
+          this.comment = "";
         });
     },
   },
