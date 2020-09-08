@@ -15,7 +15,7 @@
 <script>
 import axios from "axios";
 export default {
-  data: function() {
+  data: function () {
     return {
       address: "",
       country: "",

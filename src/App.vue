@@ -2,7 +2,7 @@
   <div id="app">
     <Header @open-modal="changeWhichForm" :loggedInUserId="loggedInUserId" />
     <div class="quote">
-      <p>"The Earth without art is just eh"</p>
+      <p>Prodaja kopija poznatih umetnickih dela</p>
     </div>
     <Modal
       :whichForm="whichForm"

@@ -34,9 +34,9 @@ export default {
       });
   },
   methods: {
-    korpa() {
-      console.log("bla");
-    },
+    // korpa() {
+    //   console.log("bla");
+    // },
   },
 };
 </script>

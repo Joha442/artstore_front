@@ -1,7 +1,8 @@
 <template>
   <form @submit.prevent="addComment">
-    <input type="text" v-model="comment" />
-    <button :disabled="!comment.length" type="submit">Post</button>
+    <textarea v-model="comment" class="addComment" placeholder="Unesite komentar"></textarea>
+    <!-- <input type="text" v-model="comment" class="addComment" /> -->
+    <button :disabled="!comment.length" type="submit" class="post">POSALJI</button>
   </form>
 </template>
 
@@ -32,4 +33,30 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+form {
+  display: flex;
+  flex-direction: row;
+}
+.addComment {
+  width: 300px;
+  min-height: 50px;
+  resize: none;
+  border: 1.2px solid rgba(56, 21, 13, 0.534);
+  margin-bottom: 10px;
+  padding: 5px;
+}
+.post {
+  color: rgb(255, 255, 255);
+  background-color: rgba(56, 21, 13, 0.534);
+  padding: 5px;
+  border: none;
+  box-shadow: 3px 3px 3px 0px rgba(0, 0, 0, 0.699);
+  height: 62px;
+  margin-left: 5px;
+  width: 80px;
+}
+.post:hover {
+  background-color: rgb(23, 112, 112);
+}
+</style>
