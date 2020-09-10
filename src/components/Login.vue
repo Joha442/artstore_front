@@ -26,9 +26,8 @@ export default {
           password: this.password,
         })
         .then((res) => {
-          console.log(res.data);
           localStorage.setItem("user_id", res.data.data.user_id);
-          this.$emit("success", "user_id");
+          this.$emit("success", res.data.data.user_id);
           this.$emit("close-modal");
         })
         .catch((err) => {

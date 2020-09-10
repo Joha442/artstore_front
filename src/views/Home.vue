@@ -9,7 +9,6 @@
 <script>
 import axios from "axios";
 import Product from "../components/Product.vue";
-import Login from "../components/Login.vue";
 
 export default {
   name: "Home",

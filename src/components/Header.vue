@@ -32,12 +32,12 @@ export default {
   data: function () {
     return {};
   },
-  props: ["user", "loggedInUserId"],
+  props: ["loggedInUserId"],
   methods: {},
 };
 </script>
 
-<style>
+<style scoped>
 .header {
   background-color: rgba(56, 21, 13, 0.534);
   box-shadow: 5px 11px 11px -8px rgba(0, 0, 0, 0.8);

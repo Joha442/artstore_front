@@ -6,8 +6,8 @@
       <h2>{{ product.aut_fullName }}</h2>
       <div class="price-comm">
         <h3>
-          <i class="fas fa-euro-sign"></i>
           {{product.pro_price}}
+          <i class="fas fa-euro-sign"></i>
         </h3>
         <span>
           <i class="far fa-comment-alt">{{ " " + numberOfComments }}</i>

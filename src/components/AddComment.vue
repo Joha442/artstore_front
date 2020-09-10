@@ -1,8 +1,7 @@
 <template>
   <form @submit.prevent="addComment">
     <textarea v-model="comment" class="addComment" placeholder="Unesite komentar"></textarea>
-    <!-- <input type="text" v-model="comment" class="addComment" /> -->
-    <button :disabled="!comment.length" type="submit" class="post">POSALJI</button>
+    <button :disabled="!comment.length" type="submit" class="post">POŠALJI</button>
   </form>
 </template>
 

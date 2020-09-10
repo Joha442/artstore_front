@@ -2,6 +2,7 @@
   <div>
     <AddComment @comment-added="getComments" :pro_id="pro_id" v-if="loggedInUserId" />
     <div v-for="comment in comments" :key="comment.com_id" class="comments">
+      <button v-if="loggedInUserId==1" class="delete" @click="deleteComment(comment.com_id)">Obrisi</button>
       <p>
         <i class="fas fa-user"></i>
         <span class="user">{{comment.user_username}}</span>
@@ -10,7 +11,7 @@
         {{comment.com_date}}
         <i class="far fa-clock"></i>
       </p>
-      <p>{{ comment.com_content }}</p>
+      <p class="content">{{ comment.com_content }}</p>
     </div>
   </div>
 </template>
@@ -37,6 +38,7 @@ export default {
         .get("http://localhost:3000/comments?pro_id=" + this.pro_id)
         .then((res) => {
           this.comments = res.data.data;
+          this.comments.reverse();
           this.formatDates(this.comments);
         });
     },
@@ -51,9 +53,9 @@ export default {
       var d = new Date(oldDate);
       var date =
         d.getDate().toString() +
-        "/" +
+        "." +
         d.getMonth().toString() +
-        "/" +
+        "." +
         d.getFullYear().toString();
       var h = d.getHours().toString();
       var m = d.getMinutes().toString();
@@ -61,6 +63,14 @@ export default {
         (h.length < 2 ? "0" + h : h) + ":" + (m.length < 2 ? "0" + m : m);
       var fullDate = date + "\t" + time;
       return fullDate;
+    },
+    deleteComment(com_id) {
+      console.log(com_id);
+      axios
+        .delete("http://localhost:3000/comments?com_id=" + com_id)
+        .then((res) => {
+          this.getComments();
+        });
     },
   },
 };
@@ -72,6 +82,7 @@ export default {
   background-color: rgba(56, 21, 13, 0.1);
   padding: 10px;
   word-wrap: break-word;
+  position: relative;
 }
 .fa-user {
   font-size: 50px;
@@ -90,5 +101,12 @@ export default {
   margin-left: 60px;
   position: relative;
   bottom: 20px;
+}
+.content {
+  padding: 0 10px 5px;
+}
+.delete {
+  position: absolute;
+  left: 94%;
 }
 </style>

@@ -13,7 +13,7 @@
     />
     <router-view :loggedInUserId="loggedInUserId" />
     <footer>
-      <p>Created by Jovana Stojanovic, 2020</p>
+      <p>Jovana Stojanovic, 2020</p>
     </footer>
   </div>
 </template>
@@ -28,7 +28,7 @@ export default {
   data() {
     return {
       whichForm: "",
-      loggedInUserId: localStorage.getItem("user_id"),
+      loggedInUserId: parseInt(localStorage.getItem("user_id")),
     };
   },
   methods: {

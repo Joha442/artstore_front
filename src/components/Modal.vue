@@ -31,7 +31,7 @@ export default {
       localStorage.removeItem("user_id");
     },
     continueEmit(user_id) {
-      this.$emit("success", "user_id");
+      this.$emit("success", user_id);
     },
   },
 };

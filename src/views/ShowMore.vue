@@ -29,7 +29,7 @@
     <div class="line"></div>
     <p class="numberOfComments">{{ numberOfComments + " Komentara"}}</p>
     <div class="all-comments">
-      <Comments :pro_id="pro_id" :loggedInUserId="loggedInUserId" />
+      <Comments :pro_id="pro_id" :loggedInUserId="loggedInUserId" @comment-deleted="getComments" />
     </div>
   </div>
 </template>
@@ -53,7 +53,6 @@ export default {
     axios
       .get("http://localhost:3000/products?pro_id=" + this.pro_id)
       .then((res) => {
-        console.log(typeof res.data.data);
         if (res.data.data[0]) {
           this.currentProduct = res.data.data[0];
         }
