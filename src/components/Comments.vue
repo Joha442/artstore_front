@@ -1,27 +1,24 @@
 <template>
   <div>
-    <AddComment @comment-added="getComments" :pro_id="pro_id" v-if="loggedInUserId" />
-    <div v-for="comment in comments" :key="comment.com_id" class="comments">
-      <button v-if="loggedInUserId==1" class="delete" @click="deleteComment(comment.com_id)">Obrisi</button>
-      <p>
-        <i class="fas fa-user"></i>
-        <span class="user">{{comment.user_username}}</span>
-      </p>
-      <p class="date">
-        {{comment.com_date}}
-        <i class="far fa-clock"></i>
-      </p>
-      <p class="content">{{ comment.com_content }}</p>
-    </div>
+    <AddComment @comment-added="commentAdded" :pro_id="pro_id" v-if="loggedInUserId" />
+    <Comment
+      v-for="comment in comments"
+      :key="comment.com_id"
+      :comment="comment"
+      :loggedInUserId="loggedInUserId"
+      @comment-deleted="commentDeleted"
+    />
   </div>
 </template>
 <script>
 import axios from "axios";
 import AddComment from "./AddComment.vue";
+import Comment from "./Comment.vue";
 
 export default {
   components: {
     AddComment,
+    Comment,
   },
   props: ["pro_id", "loggedInUserId"],
   data: function () {
@@ -64,49 +61,16 @@ export default {
       var fullDate = date + "\t" + time;
       return fullDate;
     },
-    deleteComment(com_id) {
-      console.log(com_id);
-      axios
-        .delete("http://localhost:3000/comments?com_id=" + com_id)
-        .then((res) => {
-          this.getComments();
-        });
+    commentAdded() {
+      this.getComments();
+      this.$emit("comment-added");
+    },
+    commentDeleted() {
+      this.getComments();
+      this.$emit("comment-deleted");
     },
   },
 };
 </script>
 <style scoped>
-.comments {
-  text-align: left;
-  margin-bottom: 20px;
-  background-color: rgba(56, 21, 13, 0.1);
-  padding: 10px;
-  word-wrap: break-word;
-  position: relative;
-}
-.fa-user {
-  font-size: 50px;
-  color: rgba(56, 21, 13, 0.534);
-}
-.user {
-  font-weight: bold;
-  font-size: 16px;
-  color: black;
-  margin-left: 15px;
-  position: relative;
-  bottom: 25px;
-}
-.date {
-  color: rgba(83, 80, 80, 0.856);
-  margin-left: 60px;
-  position: relative;
-  bottom: 20px;
-}
-.content {
-  padding: 0 10px 5px;
-}
-.delete {
-  position: absolute;
-  left: 94%;
-}
 </style>

@@ -29,7 +29,12 @@
     <div class="line"></div>
     <p class="numberOfComments">{{ numberOfComments + " Komentara"}}</p>
     <div class="all-comments">
-      <Comments :pro_id="pro_id" :loggedInUserId="loggedInUserId" @comment-deleted="getComments" />
+      <Comments
+        :pro_id="pro_id"
+        :loggedInUserId="loggedInUserId"
+        @comment-added="getNumberOfComments"
+        @comment-deleted="getNumberOfComments"
+      />
     </div>
   </div>
 </template>
@@ -49,6 +54,15 @@ export default {
       numberOfComments: 0,
     };
   },
+  methods: {
+    getNumberOfComments() {
+      axios
+        .get("http://localhost:3000/countcomments?pro_id=" + this.pro_id)
+        .then((res) => {
+          this.numberOfComments = res.data.data;
+        });
+    },
+  },
   created: function () {
     axios
       .get("http://localhost:3000/products?pro_id=" + this.pro_id)
@@ -57,11 +71,7 @@ export default {
           this.currentProduct = res.data.data[0];
         }
       });
-    axios
-      .get("http://localhost:3000/countcomments?pro_id=" + this.pro_id)
-      .then((res) => {
-        this.numberOfComments = res.data.data;
-      });
+    this.getNumberOfComments();
   },
 };
 </script>
