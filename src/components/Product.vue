@@ -4,7 +4,7 @@
       <img :src="product.pro_image" />
       <h1>{{ product.pro_title }}</h1>
       <h2>{{ product.aut_fullName }}</h2>
-      <div class="price-comm">
+      <div class="price-comment">
         <h3>
           {{product.pro_price}}
           <i class="fas fa-euro-sign"></i>
@@ -33,17 +33,12 @@ export default {
         this.numberOfComments = res.data.data;
       });
   },
-  methods: {
-    // korpa() {
-    //   console.log("bla");
-    // },
-  },
 };
 </script>
 <style scoped>
 .container {
   width: 346px;
-  height: 380px;
+  /* height: 380px; */
   transition: 1s;
   border-bottom: rgba(156, 116, 98, 0.185) 2px solid;
   border-bottom-left-radius: 5px;
@@ -52,40 +47,39 @@ export default {
 }
 .container:hover {
   transform: scale(1.2);
-  z-index: 2;
+  /* z-index: 2; */
 }
-
-p {
+/* p {
   padding: 10px;
-}
-.container h1 {
+} */
+.container h1,
+.container h2,
+.container h3,
+.fa-comment-alt {
   color: rgba(43, 44, 44, 0.938);
-  font-size: 20px;
-  margin: 10px;
   font-weight: normal;
 }
+.container h1 {
+  font-size: 20px;
+  margin: 10px;
+}
 .container h2 {
-  color: rgba(43, 44, 44, 0.938);
   font-size: 18px;
   font-style: italic;
   margin: 20px;
-  font-weight: normal;
 }
 .container h3 {
-  color: rgba(43, 44, 44, 0.938);
   font-size: 16px;
-  font-weight: normal;
 }
 a {
   text-decoration: none;
 }
-.far,
 .fa-comment-alt {
   font-size: 20px;
-  color: rgba(43, 44, 44, 0.938);
 }
-.price-comm {
+.price-comment {
   display: flex;
   justify-content: space-around;
+  margin-bottom: 20px;
 }
 </style>

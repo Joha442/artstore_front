@@ -5,24 +5,28 @@
       <Login
         v-if="whichForm==='login'"
         @close-modal="$emit('close-modal')"
-        @success="continueEmit"
+        @success="continueIDEmit"
+        @current-user="continueUsernameEmit"
       />
       <Register v-if="whichForm==='register'" @open-login="$emit('open-login')" />
       <div class="logout" v-if="whichForm==='logout'">
-        <p>Are you sure?</p>
-        <button @click="logout" class="logoutBtn">Yes</button>
+        <p>Da li ste sigurni?</p>
+        <button @click="logout" class="logoutBtn">Da</button>
       </div>
+      <OrderForm v-if="whichForm==='checkout'" />
     </div>
   </div>
 </template>
 <script>
 import Login from "../components/Login.vue";
 import Register from "../components/Register.vue";
+import OrderForm from "../components/OrderForm.vue";
 export default {
   props: ["whichForm"],
   components: {
     Login,
     Register,
+    OrderForm,
   },
   methods: {
     logout() {
@@ -30,8 +34,11 @@ export default {
       this.$emit("logout");
       localStorage.removeItem("user_id");
     },
-    continueEmit(user_id) {
+    continueIDEmit(user_id) {
       this.$emit("success", user_id);
+    },
+    continueUsernameEmit(username) {
+      this.$emit("current-user", username);
     },
   },
 };
@@ -55,6 +62,7 @@ export default {
   left: 40%;
   z-index: 1000;
   background-color: rgb(255, 255, 255);
+  /* border: rgb(23, 112, 112) 2px solid; */
 }
 .closeBtn {
   position: relative;
@@ -66,6 +74,7 @@ export default {
   padding: 5px;
   border: none;
   box-shadow: 3px 3px 3px 0px rgba(0, 0, 0, 0.699);
+  outline: none;
 }
 .closeBtn:hover {
   background-color: rgb(23, 112, 112);
@@ -82,6 +91,7 @@ export default {
   padding: 5px;
   border: none;
   box-shadow: 3px 3px 3px 0px rgba(0, 0, 0, 0.699);
+  outline: none;
 }
 .logoutBtn:hover {
   background-color: rgb(23, 112, 112);

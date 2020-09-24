@@ -7,12 +7,14 @@
       <div class="order">
         <h1>{{currentProduct.pro_title}}</h1>
         <h2>{{currentProduct.aut_fullName}}</h2>
-        <div class="price">
+        <p class="price">
           <i class="fas fa-euro-sign"></i>
           {{currentProduct.pro_price}}
+        </p>
+        <div class="quantity">
+          <input type="number" min="1" max="100" step="1" v-model="quantity" />
         </div>
-        <div class="quantity">Kolicina</div>
-        <button @click.prevent="korpa" class="cart">DODAJ U KORPU</button>
+        <button @click.prevent="addToCart" class="cart" :disabled="!loggedInUserId">DODAJ U KORPU</button>
       </div>
     </div>
     <h3>
@@ -27,7 +29,10 @@
     </h3>
     <div class="about-author">{{currentProduct.aut_description}}</div>
     <div class="line"></div>
-    <p class="numberOfComments">{{ numberOfComments + " Komentara"}}</p>
+    <p
+      class="numberOfComments"
+    >{{numberOfComments==1 ? numberOfComments+" Komentar" : numberOfComments + " Komentara" }}</p>
+    <!-- <p class="numberOfComments">{{ numberOfComments + " Komentara"}}</p> -->
     <div class="all-comments">
       <Comments
         :pro_id="pro_id"
@@ -41,6 +46,7 @@
 <script>
 import axios from "axios";
 import Comments from "../components/Comments.vue";
+import router from "../router/index.js";
 
 export default {
   components: {
@@ -52,6 +58,7 @@ export default {
       pro_id: this.$route.params.pro_id,
       currentProduct: null,
       numberOfComments: 0,
+      quantity: 1,
     };
   },
   methods: {
@@ -61,6 +68,13 @@ export default {
         .then((res) => {
           this.numberOfComments = res.data.data;
         });
+    },
+    addToCart() {
+      this.$emit("add-to-cart", {
+        ...this.currentProduct,
+        quantity: parseInt(this.quantity),
+      });
+      router.push({ path: "/order" });
     },
   },
   created: function () {
@@ -87,38 +101,63 @@ export default {
   margin: 50px 0;
   padding: 20px;
   display: flex;
-  flex-direction: row;
+  /* flex-direction: row; */
   background-color: rgba(56, 21, 13, 0.1);
   border-radius: 5px;
   border-bottom: 2px solid rgba(56, 21, 13, 0.1);
 }
-
+.quantity {
+  display: flex;
+  flex-direction: row;
+}
 .bigImage {
   width: 600px;
 }
-
-.order h1 {
+.order h1,
+.order h2,
+.price {
   color: rgb(47, 85, 85);
+  text-align: left;
+}
+.order h1 {
   margin: 50px 0 20px;
   font-size: 26px;
 }
 .order h2 {
-  color: rgb(49, 85, 85);
-  font-size: 22px;
   margin: 30px 0;
+  font-size: 22px;
+  font-weight: normal;
 }
 .price {
-  color: rgb(49, 85, 85);
   font-size: 16px;
-  text-align: left;
   font-weight: bold;
-  margin: 20px;
+  margin: 20px 0;
 }
-.quantity {
-  margin: 30px 0;
-  padding: 20px;
-  width: 280px;
-  text-align: left;
+.quantity input {
+  /* font-family: FontAwesome, Arial, Helvetica, sans-serif; */
+  margin: 10px 0 40px;
+  padding: 5px;
+  width: 60px;
+  height: 30px;
+  border-radius: 5px;
+  background-color: rgba(56, 21, 13, 0.212);
+  border: rgba(56, 21, 13, 0.068) 1px solid;
+  text-align: center;
+  font-size: 16px;
+  outline: none;
+}
+
+input[type="number"] {
+  position: relative;
+}
+
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  opacity: 0.5;
+  position: absolute;
+  top: 0;
+  right: 0;
+  height: 100%;
 }
 h3 {
   font-style: italic;
@@ -143,6 +182,11 @@ h3 {
   border: none;
   box-shadow: 3px 3px 3px 0px rgba(0, 0, 0, 0.699);
   width: 300px;
+  outline: none;
+}
+.cart:active {
+  margin-top: -1px;
+  opacity: 0.85;
 }
 .cart:hover {
   background-color: rgb(23, 112, 112);

@@ -2,7 +2,7 @@
   <div class="header">
     <div class="logo">
       <router-link to="/">
-        <img class="logo" src="../assets/logo.png" alt="logo-slika" />
+        <img class="logo" src="../assets/logo.png" alt="logo-image" />
       </router-link>
     </div>
     <div id="nav">
@@ -18,10 +18,14 @@
       </span>
       <span v-if="loggedInUserId" @click="$emit('open-modal', 'logout')">
         &nbsp;|
-        <i class="fas fa-user-alt"></i> Odjavi se |
+        <i class="fas fa-user-alt"></i>
+        {{currentUser}},
+        Odjavi se |
       </span>
+
       <router-link to="/order">
         <i class="fas fa-shopping-cart"></i>
+        {{numberOfItems}}
       </router-link>
     </div>
   </div>
@@ -32,7 +36,7 @@ export default {
   data: function () {
     return {};
   },
-  props: ["loggedInUserId"],
+  props: ["loggedInUserId", "numberOfItems", "currentUser"],
   methods: {},
 };
 </script>
@@ -44,7 +48,7 @@ export default {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  align-content: center;
+  /* align-content: center; */
 }
 #nav {
   padding: 30px;

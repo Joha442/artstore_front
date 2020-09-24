@@ -112,6 +112,7 @@ export default {
   padding: 10px;
   border: none;
   box-shadow: 3px 3px 3px 0px rgba(0, 0, 0, 0.699);
+  outline: none;
 }
 .edit {
   position: absolute;
@@ -139,6 +140,7 @@ export default {
   padding: 5px;
   border: none;
   box-shadow: 3px 3px 3px 0px rgba(0, 0, 0, 0.699);
+  outline: none;
 }
 .cancel {
   width: 80px;
@@ -150,6 +152,7 @@ export default {
   padding: 5px;
   border: none;
   box-shadow: 3px 3px 3px 0px rgba(0, 0, 0, 0.699);
+  outline: none;
 }
 .confirm:hover,
 .cancel:hover {

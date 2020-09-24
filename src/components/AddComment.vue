@@ -54,6 +54,10 @@ form {
   height: 62px;
   margin-left: 5px;
   width: 80px;
+  outline: none;
+}
+.post:focus {
+  margin-top: -2px;
 }
 .post:hover {
   background-color: rgb(23, 112, 112);
