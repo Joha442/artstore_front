@@ -20,6 +20,7 @@ export default {
       postcode: "",
     };
   },
+  props: ["cart"],
   methods: {
     checkout() {
       axios
@@ -29,6 +30,7 @@ export default {
           ord_country: this.country,
           ord_postcode: this.postcode,
           user_id: localStorage.getItem("user_id"),
+          cart: this.cart,
         })
         .then((res) => {
           console.log(res.data);

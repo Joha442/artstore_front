@@ -16,6 +16,8 @@
       @success="loginUser"
       @logout="logoutUser"
       @current-user="currentUserUsername"
+      @open-register="openRegister"
+      :cart="cart"
     />
     <router-view
       :loggedInUserId="loggedInUserId"
@@ -25,6 +27,9 @@
       @qty-increment="productIncrement"
       @qty-decrement="productDecrement"
       @open-modal="changeWhichForm"
+      @open-login="openLogin"
+      @delete-all="deleteAll"
+      :numberOfItems="numberOfItems"
     />
     <footer>
       <p>Jovana Stojanovic, 2020</p>
@@ -65,14 +70,18 @@ export default {
     openLogin() {
       this.whichForm = "login";
     },
+    openRegister() {
+      this.whichForm = "register";
+    },
     currentUserUsername(username) {
       this.currentUser = username;
     },
     itemsNumber() {
-      this.numberOfItems = 0;
+      var numberOfItems = 0;
       for (var i = 0; i < this.cart.length; i++) {
-        this.numberOfItems += this.cart[i].quantity;
+        numberOfItems += this.cart[i].quantity;
       }
+      this.numberOfItems = numberOfItems;
     },
     addToCart(currentProduct) {
       for (var i = 0; i < this.cart.length; i++) {
@@ -94,6 +103,10 @@ export default {
       }
       this.cart.splice(index, 1);
       this.itemsNumber();
+    },
+    deleteAll() {
+      this.cart = [];
+      this.numberOfItems = 0;
     },
     productIncrement(pro_id) {
       for (let i = 0; i < this.cart.length; i++) {

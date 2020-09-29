@@ -7,6 +7,10 @@
     <input type="password" v-model="password" placeholder="Password" class="forms" />
     <p v-if="error" class="error">{{error}}</p>
     <button type="submit" class="button">PRIJAVA</button>
+    <div class="register">
+      <p>Nemate nalog?</p>
+      <p @click="modal">Registrujte se</p>
+    </div>
   </form>
 </template>
 
@@ -23,11 +27,11 @@ export default {
   methods: {
     login() {
       this.error = "";
-      if (this.username.length < 6 || this.password.length < 8) {
-        this.error = "Neispravni podaci";
-        return;
-      }
-      if (this.username.length >= 6) {
+      // if (this.username.length < 6 || this.password.length < 8) {
+      //   this.error = "Neispravni podaci";
+      //   return;
+      // }
+      if (this.username.length) {
         (this.error = ""),
           axios
             .post("http://localhost:3000/login", {
@@ -53,6 +57,10 @@ export default {
       //   console.log(err.message);
       // });
     },
+    modal() {
+      this.$emit("close-modal");
+      this.$emit("open-register");
+    },
   },
 };
 </script>
@@ -69,15 +77,15 @@ h1 {
   padding: 5px;
   width: 250px;
   height: 25px;
-  /* background-color: rgba(56, 21, 13, 0.274); */
-  background-color: rgba(156, 116, 98, 0.185);
+  background-color: rgba(56, 21, 13, 0.274);
+  /* background-color: rgba(156, 116, 98, 0.185); */
   border: rgba(56, 21, 13, 0.068) 1px solid;
   outline: none;
 }
 .button {
   width: 263px;
   height: 35px;
-  margin-bottom: 30px;
+  /* margin-bottom: 10px; */
   color: rgb(255, 255, 255);
   background-color: rgba(56, 21, 13, 0.534);
   padding: 5px;
@@ -88,10 +96,23 @@ h1 {
 .button:hover {
   background-color: rgb(23, 112, 112);
 }
+.button:active {
+  margin-top: -1px;
+  opacity: 0.85;
+}
 .error {
   color: red;
   font-size: 12px;
   width: 250px;
   margin: 0 0 10px 20px;
+}
+.register {
+  display: flex;
+  justify-content: space-between;
+  margin: 20px;
+}
+.register p:nth-child(2) {
+  cursor: pointer;
+  color: rgb(23, 112, 112);
 }
 </style>

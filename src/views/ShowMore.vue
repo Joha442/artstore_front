@@ -14,11 +14,11 @@
         <div class="quantity">
           <input type="number" min="1" max="100" step="1" v-model="quantity" />
         </div>
-        <button @click.prevent="addToCart" class="cart" :disabled="!loggedInUserId">DODAJ U KORPU</button>
+        <button @click.prevent="addToCart" class="cart">DODAJ U KORPU</button>
       </div>
     </div>
     <h3>
-      <i class="fas fa-paint-brush"></i> O slici
+      <i class="fas fa-image"></i> O slici
     </h3>
     <div class="about-artwork">
       <p>{{currentProduct.pro_description}}</p>
@@ -31,7 +31,7 @@
     <div class="line"></div>
     <p
       class="numberOfComments"
-    >{{numberOfComments==1 ? numberOfComments+" Komentar" : numberOfComments + " Komentara" }}</p>
+    >{{numberOfComments %10==1 && (numberOfComments%100) !== 11 ? numberOfComments+" Komentar" : numberOfComments + " Komentara" }}</p>
     <!-- <p class="numberOfComments">{{ numberOfComments + " Komentara"}}</p> -->
     <div class="all-comments">
       <Comments
@@ -70,11 +70,15 @@ export default {
         });
     },
     addToCart() {
-      this.$emit("add-to-cart", {
-        ...this.currentProduct,
-        quantity: parseInt(this.quantity),
-      });
-      router.push({ path: "/order" });
+      if (!this.loggedInUserId) {
+        this.$emit("open-login");
+      } else {
+        this.$emit("add-to-cart", {
+          ...this.currentProduct,
+          quantity: parseInt(this.quantity),
+        });
+        router.push({ path: "/order" });
+      }
     },
   },
   created: function () {
@@ -161,10 +165,16 @@ input[type="number"]::-webkit-outer-spin-button {
 }
 h3 {
   font-style: italic;
-  color: rgb(23, 112, 112);
+  color: rgb(43, 38, 39);
   text-align: left;
-  font-size: 20px;
+  font-size: 18px;
   margin-left: 10px;
+}
+.fa-bookmark,
+.fa-image {
+  /* color: rgba(56, 21, 13, 0.534); */
+  color: rgba(12, 96, 102, 0.945);
+  font-size: 30px;
 }
 .about-artwork,
 .about-author {

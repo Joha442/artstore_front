@@ -7,12 +7,11 @@
       <i class="fas fa-euro-sign"></i>
     </div>
     <div class="qty">
+      <!-- <button @click="$emit('qty-decrement', item.pro_id)" class="qty-btn"> -->
       <button @click="$emit('qty-decrement', item.pro_id)" class="qty-btn">
         <i class="close fa fa-minus"></i>
       </button>
-      <!-- </div> -->
-      <span class="qty">{{item.quantity}}</span>
-      <!-- <div class="qty"> -->
+      <span>{{item.quantity}}</span>
       <button @click="$emit('qty-increment',item.pro_id)" class="qty-btn">
         <i class="close fa fa-plus"></i>
       </button>
@@ -36,23 +35,28 @@ export default {
 .container {
   display: flex;
   flex-direction: row;
-  padding: 20px;
+  padding: 10px;
   border-top: rgba(56, 21, 13, 0.534) 1px solid;
+  margin: 0 auto;
+  width: 900px;
 }
 
 .image {
-  width: 100px;
+  width: 150px;
 }
 .title {
-  padding: 20px;
-  width: 200px;
+  padding: 40px 10px;
+  width: 300px;
   text-align: left;
 }
 .price {
-  padding: 20px 50px;
+  padding: 40px 10px;
+  width: 50px;
+  margin-left: 100px;
 }
 .qty {
-  padding: 20px 10px;
+  padding: 25px 5px;
+  width: 150px;
 }
 .qty-btn {
   background-color: rgba(56, 21, 13, 0.534);
@@ -63,6 +67,7 @@ export default {
   color: white;
   padding: 5px;
   width: 30px;
+  margin: 10px;
 }
 .qty-btn:active {
   opacity: 0.85;
@@ -71,7 +76,9 @@ export default {
   background-color: rgb(23, 112, 112);
 }
 .total {
-  padding: 20px 50px;
+  padding: 40px 5px;
+  width: 60px;
+  margin-left: -20px;
 }
 .remove {
   background-color: rgba(231, 57, 18, 0.534);
@@ -87,13 +94,9 @@ export default {
   opacity: 0.85;
 }
 .delete {
-  padding: 20px 5px;
+  padding: 35px 5px;
 }
 .remove:hover {
   background-color: red;
 }
-/* .price,
-.item-qty {
-  padding: 20px;
-} */
 </style>

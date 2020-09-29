@@ -16,11 +16,13 @@
       <span v-if="!loggedInUserId" @click="$emit('open-modal', 'register')">
         <i class="fas fa-user-plus"></i> Registracija |
       </span>
-      <span v-if="loggedInUserId" @click="$emit('open-modal', 'logout')">
+      <span v-if="loggedInUserId" @click="showLogout">
         &nbsp;|
         <i class="fas fa-user-alt"></i>
-        {{currentUser}},
-        Odjavi se |
+        &nbsp;{{currentUser}} |
+      </span>
+      <span class="logout" v-if="loggedInUserId">
+        <span v-if="logout" @click="$emit('open-modal', 'logout')">Odjavi se</span>
       </span>
 
       <router-link to="/order">
@@ -34,10 +36,16 @@
 <script>
 export default {
   data: function () {
-    return {};
+    return {
+      logout: false,
+    };
   },
   props: ["loggedInUserId", "numberOfItems", "currentUser"],
-  methods: {},
+  methods: {
+    showLogout() {
+      this.logout = !this.logout;
+    },
+  },
 };
 </script>
 
@@ -72,5 +80,13 @@ span {
   color: rgb(255, 255, 255);
   font-size: 20px;
   cursor: pointer;
+}
+.logout {
+  display: inline-block;
+  position: absolute;
+  top: 60px;
+  right: 60px;
+  background-color: rgb(18, 82, 87);
+  /* padding: 5px; */
 }
 </style>

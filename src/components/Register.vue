@@ -22,24 +22,25 @@ import axios from "axios";
 export default {
   data: function () {
     return {
-      rules: [
-        {
-          message: "Šifra mora da sadrži najmanje jedno malo slovo.",
-          regex: /[a-z]+/,
-        },
-        {
-          message: "Šifra mora da sadrži najmanje jedno veliko slovo.",
-          regex: /[A-Z]+/,
-        },
-        {
-          message: "Šifra mora da sadrži najmanje 8 karaktera.",
-          regex: /.{8,}/,
-        },
-        {
-          message: "Šifra mora da sadrži najmanje jedan broj",
-          regex: /[0-9]+/,
-        },
-      ],
+      // rules: [
+      //   {
+      //     message: "Šifra mora da sadrži najmanje jedno malo slovo.",
+      //     regex: /[a-z]+/,
+      //   },
+      //   {
+      //     message: "Šifra mora da sadrži najmanje jedno veliko slovo.",
+      //     regex: /[A-Z]+/,
+      //   },
+      //   {
+      //     message: "Šifra mora da sadrži najmanje 8 karaktera.",
+      //     regex: /.{8,}/,
+      //   },
+      //   {
+      //     message: "Šifra mora da sadrži najmanje jedan broj",
+      //     regex: /[0-9]+/,
+      //   },
+      // ],
+      rules: [],
       username: "",
       password: "",
       confirmPassword: "",
@@ -52,10 +53,11 @@ export default {
       this.errorPassword = "";
       this.errorUsername = "";
       console.log(this.errorUsername);
-      if (this.username.length < 6) {
-        this.errorUsername = "Kratak Username";
-        return;
-      }
+      // if (this.username.length < 6) {
+
+      //   this.errorUsername = "Kratak Username";
+      //   return;
+      // }
       for (let condition of this.rules) {
         if (!condition.regex.test(this.password)) {
           this.errorPassword = condition.message;
@@ -109,6 +111,10 @@ h1 {
 }
 .button:hover {
   background-color: rgb(23, 112, 112);
+}
+.button:active {
+  margin-top: -1px;
+  opacity: 0.85;
 }
 .error {
   color: red;

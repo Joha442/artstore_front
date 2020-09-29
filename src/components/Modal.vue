@@ -7,13 +7,14 @@
         @close-modal="$emit('close-modal')"
         @success="continueIDEmit"
         @current-user="continueUsernameEmit"
+        @open-register="$emit('open-register')"
       />
       <Register v-if="whichForm==='register'" @open-login="$emit('open-login')" />
       <div class="logout" v-if="whichForm==='logout'">
         <p>Da li ste sigurni?</p>
         <button @click="logout" class="logoutBtn">Da</button>
       </div>
-      <OrderForm v-if="whichForm==='checkout'" />
+      <OrderForm v-if="whichForm==='checkout'" :cart="cart" />
     </div>
   </div>
 </template>
@@ -22,7 +23,7 @@ import Login from "../components/Login.vue";
 import Register from "../components/Register.vue";
 import OrderForm from "../components/OrderForm.vue";
 export default {
-  props: ["whichForm"],
+  props: ["whichForm", "cart"],
   components: {
     Login,
     Register,
@@ -50,20 +51,42 @@ export default {
   left: 0;
   height: 100%;
   width: 100%;
-  background-color: rgba(0, 0, 0, 0.7);
+  background-color: rgba(0, 0, 0, 0.808);
   display: flex;
   justify-content: center;
   align-items: center;
+  z-index: 999;
 }
 .modal {
   width: 300px;
   position: fixed;
-  top: 40%;
   left: 40%;
   z-index: 1000;
   background-color: rgb(255, 255, 255);
-  /* border: rgb(23, 112, 112) 2px solid; */
+  /* top: -400px; */
+  /* animation: drop 0.8s ease forwards; */
+  animation: modalopen 1.5s;
 }
+@keyframes modalopen {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+/* @keyframes drop {
+  0% {
+    opacity: 0;
+  }
+  70% {
+    transform: translateY(700px);
+  }
+  100% {
+    transform: translateY(650px);
+    opacity: 1;
+  }
+} */
 .closeBtn {
   position: relative;
   top: 10px;
@@ -75,6 +98,10 @@ export default {
   border: none;
   box-shadow: 3px 3px 3px 0px rgba(0, 0, 0, 0.699);
   outline: none;
+}
+.closeBtn:active {
+  margin-top: -1px;
+  opacity: 0.85;
 }
 .closeBtn:hover {
   background-color: rgb(23, 112, 112);
@@ -92,6 +119,10 @@ export default {
   border: none;
   box-shadow: 3px 3px 3px 0px rgba(0, 0, 0, 0.699);
   outline: none;
+}
+.logout:active {
+  margin-top: -1px;
+  opacity: 0.85;
 }
 .logoutBtn:hover {
   background-color: rgb(23, 112, 112);
