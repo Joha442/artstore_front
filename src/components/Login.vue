@@ -1,17 +1,17 @@
 <template>
-  <form @submit.prevent="login">
+  <div>
     <h1>
       <i class="fas fa-user"></i>
     </h1>
     <input type="text" v-model="username" placeholder="Username" class="forms" />
     <input type="password" v-model="password" placeholder="Password" class="forms" />
     <p v-if="error" class="error">{{error}}</p>
-    <button type="submit" class="button">PRIJAVA</button>
+    <button class="button" @click="login">PRIJAVA</button>
     <div class="register">
       <p>Nemate nalog?</p>
       <p @click="modal">Registrujte se</p>
     </div>
-  </form>
+  </div>
 </template>
 
 <script>

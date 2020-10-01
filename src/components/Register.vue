@@ -1,19 +1,17 @@
 <template>
   <div>
-    <form @submit.prevent="register">
-      <h1>
-        <i class="fas fa-user-plus"></i>
-      </h1>
-      <input type="text" v-model="username" placeholder="Username" class="forms" />
-      <p v-if="errorUsername" class="error">{{ errorUsername }}</p>
-      <input type="password" v-model="password" placeholder="Password" class="forms" />
-      <input type="password" v-model="confirmPassword" placeholder="Confirm Password" class="forms" />
-      <p v-if="errorPassword" class="error">{{errorPassword}}</p>
-      <button type="submit" class="forms button">REGISTRACIJA</button>
-      <p
-        class="pass"
-      >*Šifra mora da sadrži najmanje jedno malo slovo, najmanje jedno veliko slovo, najmanje 8 karaktera i najmanje jedan broj</p>
-    </form>
+    <h1>
+      <i class="fas fa-user-plus"></i>
+    </h1>
+    <input type="text" v-model="username" placeholder="Username" class="forms" />
+    <p v-if="errorUsername" class="error">{{ errorUsername }}</p>
+    <input type="password" v-model="password" placeholder="Password" class="forms" />
+    <input type="password" v-model="confirmPassword" placeholder="Confirm Password" class="forms" />
+    <p v-if="errorPassword" class="error">{{errorPassword}}</p>
+    <button class="forms button" @click="register">REGISTRACIJA</button>
+    <p
+      class="pass"
+    >*Šifra mora da sadrži najmanje jedno malo slovo, najmanje jedno veliko slovo, najmanje 8 karaktera i najmanje jedan broj</p>S
   </div>
 </template>
 <script>

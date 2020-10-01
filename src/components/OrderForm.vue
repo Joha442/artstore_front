@@ -1,12 +1,20 @@
 <template>
   <div>
-    <form @submit.prevent="checkout">
-      <input type="text" v-model="address" placeholder="Address" class="forms" />
-      <input type="text" v-model="country" placeholder="Country" class="forms" />
-      <input type="text" v-model="city" placeholder="City" class="forms" />
-      <input type="text" v-model="postcode" placeholder="Post Code" class="forms" />
-      <button class="forms button">Finish</button>
-    </form>
+    <div v-if="!isSuccessOrder">
+      <input type="text" v-model="address" placeholder="Adresa*" class="forms" />
+      <p class="error">{{error}}</p>
+      <input type="text" v-model="country" placeholder="Zemlja" class="forms" />
+      <input type="text" v-model="city" placeholder="Grad" class="forms" />
+      <input type="text" v-model="postcode" placeholder="Poštanski kod" class="forms" />
+      <button class="button" @click.prevent="checkout">
+        <i class="far fa-check-square"></i> POTVRDI
+      </button>
+      <p class="adress">* Neophodna polja</p>
+    </div>
+    <div v-if="isSuccessOrder">
+      <p>{{message}}</p>
+      <button>ZATVORI</button>
+    </div>
   </div>
 </template>
 <script>
@@ -18,23 +26,38 @@ export default {
       country: "",
       city: "",
       postcode: "",
+      error: "",
+      isSuccessOrder: false,
+      message: "",
     };
   },
   props: ["cart"],
   methods: {
+    // successOrder() {
+    //   this.isSuccessOrder = true;
+    // },
     checkout() {
-      axios
-        .post("http://localhost:3000/orders", {
-          ord_adress: this.address,
-          ord_city: this.city,
-          ord_country: this.country,
-          ord_postcode: this.postcode,
-          user_id: localStorage.getItem("user_id"),
-          cart: this.cart,
-        })
-        .then((res) => {
-          console.log(res.data);
-        });
+      if (!this.address.length) {
+        this.error = "Unesite adresu";
+        return;
+      }
+      if (this.address.length) {
+        this.error = "";
+        axios
+          .post("http://localhost:3000/orders", {
+            ord_adress: this.address,
+            ord_city: this.city,
+            ord_country: this.country,
+            ord_postcode: this.postcode,
+            user_id: localStorage.getItem("user_id"),
+            cart: this.cart,
+          })
+          .then((res) => {
+            if (res.data.result == "OK")
+              this.message = "USPEŠNO STE PORUCILI PROIZVODE";
+            this.isSuccessOrder = true;
+          });
+      }
     },
   },
 };
@@ -54,7 +77,7 @@ export default {
 .button {
   width: 263px;
   height: 35px;
-  margin-bottom: 30px;
+  margin-bottom: 10px;
   color: rgb(255, 255, 255);
   background-color: rgba(56, 21, 13, 0.534);
   padding: 5px;
@@ -70,5 +93,10 @@ export default {
   font-size: 12px;
   width: 250px;
   margin: 0 0 10px 20px;
+}
+.adress {
+  font-size: 12px;
+  text-align: left;
+  margin: 10px 20px;
 }
 </style>

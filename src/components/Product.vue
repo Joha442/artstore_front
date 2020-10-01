@@ -38,20 +38,20 @@ export default {
 <style scoped>
 .container {
   width: 346px;
-  /* height: 380px; */
-  transition: 1s;
   border-bottom: rgba(156, 116, 98, 0.185) 2px solid;
   border-bottom-left-radius: 5px;
   border-bottom-right-radius: 5px;
   background-color: rgba(156, 116, 98, 0.185);
+  transition: 1s;
+  margin-bottom: 50px;
+}
+img {
+  width: 100%;
 }
 .container:hover {
   transform: scale(1.2);
   /* z-index: 2; */
 }
-/* p {
-  padding: 10px;
-} */
 .container h1,
 .container h2,
 .container h3,
@@ -81,5 +81,15 @@ a {
   display: flex;
   justify-content: space-around;
   margin-bottom: 20px;
+}
+@media screen and (min-width: 475px) and (max-width: 600px) {
+  .container {
+    width: 400px;
+  }
+}
+@media screen and (min-width: 600px) and (max-width: 992px) {
+  .container {
+    width: 450px;
+  }
 }
 </style>

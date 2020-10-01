@@ -1,28 +1,28 @@
 <template>
-  <div>
-    <div class="comment">
-      <button
-        v-if="loggedInUserId==comment.user_id || userLevel==1"
-        class="delete"
-        @click="deleteComment(comment.com_id)"
-      >OBRIŠI</button>
-      <button v-if="loggedInUserId==comment.user_id" class="edit" @click="isEdit=true">IZMENI</button>
-      <p>
-        <i class="fas fa-user"></i>
-        <span class="user">{{comment.user_username}}</span>
-      </p>
-      <p class="date">
-        {{comment.com_date}}
-        <i class="far fa-clock"></i>
-      </p>
-      <p v-if="!isEdit" class="content">{{ comment.com_content }}</p>
-      <div v-if="isEdit">
-        <textarea type="text" v-model="newText" class="newText" />
-        <button @click="confirm" class="confirm">POTVRDI</button>
-        <button @click="cancel" class="cancel">OTKAŽI</button>
-      </div>
+  <!-- <div> -->
+  <div class="comment">
+    <button
+      v-if="loggedInUserId==comment.user_id || userLevel==1"
+      class="delete"
+      @click="deleteComment(comment.com_id)"
+    >OBRIŠI</button>
+    <button v-if="loggedInUserId==comment.user_id" class="edit" @click="isEdit=true">IZMENI</button>
+    <p>
+      <i class="fas fa-user"></i>
+      <span class="user">{{comment.user_username}}</span>
+    </p>
+    <p class="date">
+      {{comment.com_date}}
+      <i class="far fa-clock"></i>
+    </p>
+    <p v-if="!isEdit" class="content">{{ comment.com_content }}</p>
+    <div v-if="isEdit">
+      <textarea type="text" v-model="newText" class="newText" />
+      <button @click="confirm" class="confirm">POTVRDI</button>
+      <button @click="cancel" class="cancel">OTKAŽI</button>
     </div>
   </div>
+  <!-- </div> -->
 </template>
 <script>
 import axios from "axios";

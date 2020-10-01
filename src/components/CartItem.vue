@@ -1,28 +1,30 @@
 <template>
   <div class="container">
-    <img :src="item.pro_image" class="image" />
-    <div class="title">{{item.pro_title}}</div>
-    <div class="price">
-      {{item.pro_price}}
-      <i class="fas fa-euro-sign"></i>
+    <div class="imgtitle">
+      <img :src="item.pro_image" class="image" />
+      <div class="title">{{item.pro_title}}</div>
     </div>
-    <div class="qty">
-      <!-- <button @click="$emit('qty-decrement', item.pro_id)" class="qty-btn"> -->
-      <button @click="$emit('qty-decrement', item.pro_id)" class="qty-btn">
-        <i class="close fa fa-minus"></i>
-      </button>
-      <span>{{item.quantity}}</span>
-      <button @click="$emit('qty-increment',item.pro_id)" class="qty-btn">
-        <i class="close fa fa-plus"></i>
-      </button>
-    </div>
-
-    <div class="total">
-      {{item.pro_price*item.quantity}}
-      <i class="fas fa-euro-sign"></i>
-    </div>
-    <div class="delete">
-      <button @click="$emit('delete-row', item.pro_id)" class="remove">X</button>
+    <div class="qtyprice">
+      <div class="price">
+        {{item.pro_price}}
+        <i class="fas fa-euro-sign"></i>
+      </div>
+      <div class="qty">
+        <button @click="$emit('qty-decrement', item.pro_id)" class="qty-btn">
+          <i class="close fa fa-minus"></i>
+        </button>
+        <span>{{item.quantity}}</span>
+        <button @click="$emit('qty-increment',item.pro_id)" class="qty-btn">
+          <i class="close fa fa-plus"></i>
+        </button>
+      </div>
+      <div class="total">
+        {{item.pro_price*item.quantity}}
+        <i class="fas fa-euro-sign"></i>
+      </div>
+      <div class="delete">
+        <button @click="$emit('delete-row', item.pro_id)" class="remove">X</button>
+      </div>
     </div>
   </div>
 </template>
@@ -35,28 +37,33 @@ export default {
 .container {
   display: flex;
   flex-direction: row;
+  justify-content: space-between;
   padding: 10px;
   border-top: rgba(56, 21, 13, 0.534) 1px solid;
   margin: 0 auto;
-  width: 900px;
+  width: 90%;
+  /* border: black 1px solid; */
 }
-
+.imgtitle {
+  display: flex;
+  flex-direction: row;
+}
 .image {
-  width: 150px;
+  width: 250px;
 }
 .title {
-  padding: 40px 10px;
-  width: 300px;
   text-align: left;
+  margin: auto 10px;
+  font-size: 20px;
+}
+.qtyprice {
+  display: flex;
 }
 .price {
-  padding: 40px 10px;
-  width: 50px;
-  margin-left: 100px;
+  margin: auto 10px;
 }
 .qty {
-  padding: 25px 5px;
-  width: 150px;
+  margin: auto 10px;
 }
 .qty-btn {
   background-color: rgba(56, 21, 13, 0.534);
@@ -67,7 +74,7 @@ export default {
   color: white;
   padding: 5px;
   width: 30px;
-  margin: 10px;
+  margin: auto 10px;
 }
 .qty-btn:active {
   opacity: 0.85;
@@ -76,9 +83,7 @@ export default {
   background-color: rgb(23, 112, 112);
 }
 .total {
-  padding: 40px 5px;
-  width: 60px;
-  margin-left: -20px;
+  margin: auto 10px;
 }
 .remove {
   background-color: rgba(231, 57, 18, 0.534);
@@ -94,7 +99,7 @@ export default {
   opacity: 0.85;
 }
 .delete {
-  padding: 35px 5px;
+  margin: auto 10px;
 }
 .remove:hover {
   background-color: red;

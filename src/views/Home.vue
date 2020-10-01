@@ -31,9 +31,34 @@ export default {
 .home {
   width: 1200px;
   margin: 50px auto;
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  justify-items: center;
-  grid-gap: 50px 30px;
+  /* margin-top: 50px; */
+  /* display: grid; */
+  /* grid-template-columns: 1fr 1fr 1fr;
+  grid-gap: 50px 30px; */
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+
+@media screen and (max-width: 475px) {
+  .home {
+    width: 400px;
+    padding: 30px;
+  }
+}
+@media screen and (min-width: 475px) and (max-width: 600px) {
+  .home {
+    width: 450px;
+    padding: 30px;
+    align-items: center;
+  }
+}
+@media screen and (min-width: 600px) and (max-width: 992px) {
+  .home {
+    /* width: px; */
+    padding: 30px;
+    align-items: center;
+  }
 }
 </style>

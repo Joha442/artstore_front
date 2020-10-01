@@ -1,11 +1,17 @@
 <template>
   <div class="order">
-    <!-- <div> -->
     <h1>Vaša korpa</h1>
-    <div v-if="cart.length" class="title">
-      <p class="price">Cena</p>
-      <p class="qty">Količina</p>
-      <p class="total">Ukupno</p>
+    <div class="container" v-if="cart.length">
+      <div class="imgtitle">
+        <div class="image" />
+        <div class="title" />
+      </div>
+      <div class="qtyprice">
+        <div class="price">Cena</div>
+        <div class="qty">Količina</div>
+        <div class="total">Ukupno</div>
+        <div class="delete"></div>
+      </div>
     </div>
     <div v-if="!cart.length">
       <i class="fas fa-shopping-cart"></i>
@@ -23,12 +29,13 @@
     />
     <div class="sum" v-if="sum">
       <p>
-        UKUPAN IZNOS: {{sum}}
-        <i class="fas fa-euro-sign"></i>
+        UKUPAN IZNOS:
+        <span>
+          {{sum}}
+          <i class="fas fa-euro-sign"></i>
+        </span>
       </p>
-      <button class="cart" @click="$emit('open-modal','checkout' )">
-        <i class="far fa-check-square"></i> POTVRDI PORUDŽBINU
-      </button>
+      <button class="cart" @click="$emit('open-modal','checkout' )">POTVRDI PORUDŽBINU</button>
     </div>
     <div class="btn" v-if="sum">
       <button class="cart" @click="showProducts">
@@ -39,7 +46,6 @@
         <i class="fas fa-trash"></i>
       </button>
     </div>
-    <!-- </div> -->
   </div>
 </template>
 <script>
@@ -56,10 +62,12 @@ export default {
       sum: 0,
     };
   },
-  props: ["cart", "numberOfItems"],
-  updated() {
-    this.total();
+  watch: {
+    numberOfItems: function () {
+      this.total();
+    },
   },
+  props: ["cart", "numberOfItems"],
   created() {
     this.total();
   },
@@ -74,7 +82,6 @@ export default {
       this.$emit("qty-decrement", pro_id);
     },
     total() {
-      console.log("UPDATE");
       var sum = 0;
       for (let i = 0; i < this.cart.length; i++) {
         sum += this.cart[i].pro_price * this.cart[i].quantity;
@@ -88,35 +95,55 @@ export default {
 };
 </script>
 <style scoped>
-.title {
+.container {
   display: flex;
   flex-direction: row;
-  margin: 10px 0;
-  color: rgb(75, 74, 74);
-  font-style: italic;
-}
-h1 {
-  color: rgba(0, 0, 0, 0.664);
-  font-size: 24px;
+  justify-content: space-between;
   padding: 10px;
-  text-align: center;
+  margin: 0 auto;
+  width: 90%;
+}
+.imgtitle {
+  display: flex;
+  flex-direction: row;
+}
+.image {
+  width: 250px;
+}
+.title {
+  text-align: left;
+  margin: auto 10px;
+  font-size: 20px;
+}
+.qtyprice {
+  display: flex;
 }
 .price {
-  margin-left: 900px;
+  margin: auto 10px;
 }
 .qty {
-  margin: 0 30px 0 70px;
+  margin: auto 10px;
+}
+.total {
+  margin: auto 10px;
+}
+.delete {
+  margin: auto 10px;
 }
 .sum {
-  font-weight: bold;
-  font-style: italic;
   text-align: right;
   margin: 30px 280px;
-  padding: 20px;
-  background-color: rgba(56, 21, 13, 0.1);
+  padding: 10px;
+  /* background-color: rgba(56, 21, 13, 0.1); */
 }
 .sum p {
-  margin: 20px;
+  margin: 10px;
+  color: rgba(0, 0, 0, 0.925);
+}
+.sum span {
+  font-size: 25px;
+  font-weight: bold;
+  color: black;
 }
 .btn {
   display: flex;
@@ -132,7 +159,7 @@ h1 {
   padding: 10px;
   border: none;
   box-shadow: 3px 3px 3px 0px rgba(0, 0, 0, 0.699);
-  width: 200px;
+  width: 250px;
   outline: none;
   text-align: center;
 }
