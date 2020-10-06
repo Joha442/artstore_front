@@ -1,7 +1,11 @@
 <template>
   <div>
     <div class="home">
-      <Product v-for="product in products" :key="product.pro_id" :product="product" />
+      <Product
+        v-for="product in products"
+        :key="product.pro_id"
+        :product="product"
+      />
     </div>
   </div>
 </template>
@@ -29,36 +33,36 @@ export default {
 </script>
 <style scoped>
 .home {
-  width: 1200px;
-  margin: 50px auto;
-  /* margin-top: 50px; */
-  /* display: grid; */
-  /* grid-template-columns: 1fr 1fr 1fr;
-  grid-gap: 50px 30px; */
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  justify-content: space-around;
+  width: 90%;
+  margin: 30px auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-gap: 25px 25px;
+  justify-content: center;
 }
 
-@media screen and (max-width: 475px) {
+@media screen and (max-width: 1200px) {
   .home {
-    width: 400px;
-    padding: 30px;
+    margin-top: 25px;
+    grid-template-columns: 1fr 1fr 1fr;
+    /* grid-gap: 20px 20px; */
   }
 }
-@media screen and (min-width: 475px) and (max-width: 600px) {
+@media screen and (max-width: 992px) {
   .home {
-    width: 450px;
-    padding: 30px;
-    align-items: center;
+    /* width: 90%; */
+    /* margin-top: 25px; */
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 30px 30px;
   }
 }
-@media screen and (min-width: 600px) and (max-width: 992px) {
+@media screen and (max-width: 590px) {
   .home {
-    /* width: px; */
-    padding: 30px;
-    align-items: center;
+    width: 100%;
+    margin-top: 10px;
+    grid-template-columns: 1fr;
+    grid-gap: 10px 0;
+    /* margin: 10px auto; */
   }
 }
 </style>

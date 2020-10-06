@@ -6,8 +6,8 @@
       <h2>{{ product.aut_fullName }}</h2>
       <div class="price-comment">
         <h3>
-          {{product.pro_price}}
-          <i class="fas fa-euro-sign"></i>
+          {{ product.pro_price }}.00 EUR
+          <!-- <i class="fas fa-euro-sign"></i> -->
         </h3>
         <span>
           <i class="far fa-comment-alt">{{ " " + numberOfComments }}</i>
@@ -37,19 +37,19 @@ export default {
 </script>
 <style scoped>
 .container {
-  width: 346px;
+  width: 100%;
   border-bottom: rgba(156, 116, 98, 0.185) 2px solid;
   border-bottom-left-radius: 5px;
   border-bottom-right-radius: 5px;
   background-color: rgba(156, 116, 98, 0.185);
   transition: 1s;
-  margin-bottom: 50px;
+  text-align: center;
 }
 img {
   width: 100%;
 }
 .container:hover {
-  transform: scale(1.2);
+  transform: scale(1.1);
   /* z-index: 2; */
 }
 .container h1,
@@ -82,14 +82,10 @@ a {
   justify-content: space-around;
   margin-bottom: 20px;
 }
-@media screen and (min-width: 475px) and (max-width: 600px) {
-  .container {
-    width: 400px;
-  }
-}
-@media screen and (min-width: 600px) and (max-width: 992px) {
-  .container {
-    width: 450px;
+
+@media screen and (max-width: 590px) {
+  .container:hover {
+    transform: none;
   }
 }
 </style>

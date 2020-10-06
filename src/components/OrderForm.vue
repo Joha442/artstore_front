@@ -1,24 +1,34 @@
 <template>
   <div>
     <div v-if="!isSuccessOrder">
-      <input type="text" v-model="address" placeholder="Adresa*" class="forms" />
-      <p class="error">{{error}}</p>
+      <input
+        type="text"
+        v-model="address"
+        placeholder="Adresa*"
+        class="forms top"
+      />
+
       <input type="text" v-model="country" placeholder="Zemlja" class="forms" />
       <input type="text" v-model="city" placeholder="Grad" class="forms" />
-      <input type="text" v-model="postcode" placeholder="Poštanski kod" class="forms" />
-      <button class="button" @click.prevent="checkout">
-        <i class="far fa-check-square"></i> POTVRDI
-      </button>
+      <input
+        type="text"
+        v-model="postcode"
+        placeholder="Poštanski kod"
+        class="forms"
+      />
+      <p class="error">{{ error }}</p>
+      <button class="button" @click.prevent="checkout">POTVRDI</button>
       <p class="adress">* Neophodna polja</p>
     </div>
     <div v-if="isSuccessOrder">
-      <p>{{message}}</p>
-      <button>ZATVORI</button>
+      <p class="message">{{ message }}</p>
+      <button class="successBtn" @click="closeForm">ZATVORI</button>
     </div>
   </div>
 </template>
 <script>
 import axios from "axios";
+import router from "../router";
 export default {
   data: function () {
     return {
@@ -33,15 +43,13 @@ export default {
   },
   props: ["cart"],
   methods: {
-    // successOrder() {
-    //   this.isSuccessOrder = true;
-    // },
     checkout() {
       if (!this.address.length) {
         this.error = "Unesite adresu";
         return;
-      }
-      if (this.address.length) {
+      } else if (!/^[0-9]+$/.test(this.postcode)) {
+        this.error = "Neispravan poštanski broj";
+      } else {
         this.error = "";
         axios
           .post("http://localhost:3000/orders", {
@@ -53,11 +61,18 @@ export default {
             cart: this.cart,
           })
           .then((res) => {
-            if (res.data.result == "OK")
-              this.message = "USPEŠNO STE PORUCILI PROIZVODE";
-            this.isSuccessOrder = true;
+            console.log(res);
+            if (res.data.result == "OK") {
+              this.message = "Uspešno ste poručili proizvode";
+              this.isSuccessOrder = true;
+              this.$emit("clear-cart");
+            }
           });
       }
+    },
+    closeForm() {
+      this.$emit("close-modal");
+      router.push({ path: "/" });
     },
   },
 };
@@ -66,16 +81,16 @@ export default {
 .forms {
   font-family: FontAwesome, Arial, Helvetica, sans-serif;
   display: block;
-  margin: 20px;
+  margin: 20px auto;
   padding: 5px;
-  width: 250px;
+  width: 80%;
   height: 25px;
   background-color: rgba(56, 21, 13, 0.274);
   border: rgba(56, 21, 13, 0.068) 1px solid;
   outline: none;
 }
 .button {
-  width: 263px;
+  width: 84%;
   height: 35px;
   margin-bottom: 10px;
   color: rgb(255, 255, 255);
@@ -97,6 +112,30 @@ export default {
 .adress {
   font-size: 12px;
   text-align: left;
-  margin: 10px 20px;
+  margin: 10px 25px;
+}
+.top {
+  margin-top: 50px;
+}
+.message {
+  margin: 30px 0 20px;
+  text-align: center;
+  font-size: 18px;
+}
+.successBtn {
+  width: 80px;
+  color: rgb(255, 255, 255);
+  background-color: rgba(56, 21, 13, 0.534);
+  padding: 5px;
+  border: none;
+  box-shadow: 3px 3px 3px 0px rgba(0, 0, 0, 0.699);
+  outline: none;
+  margin-bottom: 20px;
+}
+.successBtn:active {
+  opacity: 0.85;
+}
+.successBtn:hover {
+  background-color: rgb(23, 112, 112);
 }
 </style>

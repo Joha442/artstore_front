@@ -1,28 +1,48 @@
 <template>
-  <!-- <div> -->
   <div class="comment">
     <button
-      v-if="loggedInUserId==comment.user_id || userLevel==1"
+      v-if="loggedInUserId == comment.user_id || userLevel == 1"
       class="delete"
       @click="deleteComment(comment.com_id)"
-    >OBRIŠI</button>
-    <button v-if="loggedInUserId==comment.user_id" class="edit" @click="isEdit=true">IZMENI</button>
-    <p>
-      <i class="fas fa-user"></i>
-      <span class="user">{{comment.user_username}}</span>
-    </p>
-    <p class="date">
-      {{comment.com_date}}
-      <i class="far fa-clock"></i>
-    </p>
+    >
+      <span><i class="fas fa-trash"></i></span>
+      <span> OBRIŠI</span>
+    </button>
+    <button
+      v-if="loggedInUserId == comment.user_id"
+      class="edit"
+      @click="isEdit = true"
+    >
+      <span><i class="fas fa-pencil-alt"></i></span>
+      <span> IZMENI</span>
+    </button>
+    <div class="user">
+      <p>
+        <i class="fas fa-user"></i>
+      </p>
+      <div class="user-date">
+        <p>{{ comment.user_username }}</p>
+        <p>
+          {{ comment.com_date }}
+          <i class="far fa-clock"></i>
+        </p>
+      </div>
+    </div>
     <p v-if="!isEdit" class="content">{{ comment.com_content }}</p>
-    <div v-if="isEdit">
+    <div v-if="isEdit" class="edit-container">
       <textarea type="text" v-model="newText" class="newText" />
-      <button @click="confirm" class="confirm">POTVRDI</button>
-      <button @click="cancel" class="cancel">OTKAŽI</button>
+      <div class="edit-buttons">
+        <button @click="confirm" :disabled="!newText" class="confirm">
+          <span><i class="fas fa-check"></i></span>
+          <span>POTVRDI</span>
+        </button>
+        <button @click="cancel" class="cancel">
+          <span><i class="fas fa-times"></i></span>
+          <span>OTKAŽI</span>
+        </button>
+      </div>
     </div>
   </div>
-  <!-- </div> -->
 </template>
 <script>
 import axios from "axios";
@@ -35,6 +55,9 @@ export default {
       isEdit: false,
       newText: this.comment.com_content,
     };
+  },
+  created() {
+    this.getUserLevel();
   },
   updated() {
     this.getUserLevel();
@@ -82,45 +105,62 @@ export default {
   word-wrap: break-word;
   position: relative;
 }
+.user {
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 10px;
+}
 .fa-user {
   font-size: 50px;
   color: rgba(56, 21, 13, 0.534);
+  margin-left: 12px;
 }
-.user {
+.user-date {
+  display: flex;
+  flex-direction: column;
+  margin-left: 10px;
+}
+.user-date p:nth-child(1) {
   font-weight: bold;
-  font-size: 16px;
   color: black;
-  margin-left: 15px;
-  position: relative;
-  bottom: 25px;
+  font-size: 16px;
 }
-.date {
+.user-date p:nth-child(2) {
   color: rgba(83, 80, 80, 0.856);
-  margin-left: 60px;
-  position: relative;
-  bottom: 20px;
+  font-size: 14px;
+  margin-top: 2px;
 }
 .content {
-  padding: 0 10px 5px;
+  padding: 5px 10px 5px;
 }
 .delete,
 .edit {
-  position: absolute;
-  left: 92%;
   color: rgb(255, 255, 255);
   background-color: rgba(56, 21, 13, 0.534);
   padding: 10px;
   border: none;
   box-shadow: 3px 3px 3px 0px rgba(0, 0, 0, 0.699);
   outline: none;
+  width: 90px;
+}
+.delete {
+  position: absolute;
+  right: 10px;
+  top: 7px;
+  background-color: rgba(231, 57, 18, 0.534);
 }
 .edit {
   position: absolute;
-  left: 85%;
+  right: 108px;
+  top: 7px;
 }
-.delete:hover,
 .edit:hover {
   background-color: rgb(23, 112, 112);
+  cursor: pointer;
+}
+.delete:hover {
+  background-color: rgb(255, 0, 0);
+  cursor: pointer;
 }
 .newText {
   width: 300px;
@@ -130,11 +170,22 @@ export default {
   margin-bottom: 10px;
   padding: 5px;
 }
+.edit-container {
+  display: flex;
+  flex-direction: row;
+}
+.edit-buttons {
+  height: 60px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding-left: 10px;
+}
+.edit-buttons span:nth-child(1) {
+  display: none;
+}
 .confirm {
   width: 80px;
-  position: relative;
-  bottom: 55px;
-  left: 5px;
   color: rgb(255, 255, 255);
   background-color: rgba(56, 21, 13, 0.534);
   padding: 5px;
@@ -144,9 +195,6 @@ export default {
 }
 .cancel {
   width: 80px;
-  position: relative;
-  bottom: 20px;
-  right: 75px;
   color: rgb(255, 255, 255);
   background-color: rgba(56, 21, 13, 0.534);
   padding: 5px;
@@ -157,5 +205,47 @@ export default {
 .confirm:hover,
 .cancel:hover {
   background-color: rgb(23, 112, 112);
+}
+
+@media screen and (max-width: 1025px) {
+  .delete span:nth-child(2),
+  .edit span:nth-child(2) {
+    display: none;
+  }
+  .delete,
+  .edit {
+    padding: 10px;
+    width: 40px;
+  }
+  .edit {
+    right: 55px;
+  }
+  .edit-buttons span:nth-child(1),
+  .edit-buttons span:nth-child(1) {
+    display: none;
+  }
+  .confirm span:nth-child(1),
+  .cancel span:nth-child(1) {
+    display: inline;
+  }
+  .confirm span:nth-child(2),
+  .cancel span:nth-child(2) {
+    display: none;
+  }
+  .confirm,
+  .cancel {
+    width: 40px;
+  }
+}
+@media screen and (max-width: 400px) {
+  .user-date p:nth-child(1) {
+    font-weight: bold;
+    font-size: 14px;
+    color: black;
+    width: 120px;
+  }
+  .user-date p:nth-child(2) {
+    font-size: 12px;
+  }
 }
 </style>

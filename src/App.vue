@@ -18,6 +18,7 @@
       @current-user="currentUserUsername"
       @open-register="openRegister"
       :cart="cart"
+      @clear-cart="clearCart"
     />
     <router-view
       :loggedInUserId="loggedInUserId"
@@ -39,6 +40,7 @@
 <script>
 import Header from "./components/Header.vue";
 import Modal from "./components/Modal.vue";
+import router from "./router/index.js";
 export default {
   components: {
     Header,
@@ -66,6 +68,11 @@ export default {
     logoutUser() {
       this.loggedInUserId = "";
       this.currentUser = "";
+      this.cart = [];
+      this.numberOfItems = 0;
+      if (this.$route.path !== "/") {
+        router.push({ path: "/" });
+      }
     },
     openLogin() {
       this.whichForm = "login";
@@ -87,6 +94,7 @@ export default {
       for (var i = 0; i < this.cart.length; i++) {
         if (this.cart[i].pro_id === currentProduct.pro_id) {
           this.cart[i].quantity += currentProduct.quantity;
+          this.itemsNumber();
           return;
         }
       }
@@ -127,6 +135,10 @@ export default {
       }
       this.itemsNumber();
     },
+    clearCart() {
+      this.cart = [];
+      this.numberOfItems = 0;
+    },
   },
 };
 </script>
@@ -140,30 +152,56 @@ h2,
 h3 {
   padding: 0;
   margin: 0;
-  font-family: "Open Sans", Arial, Helvetica, sans-serif;
+  font-family: Roboto, "Open Sans", Arial, Helvetica, sans-serif;
 }
-#app {
-  /* -webkit-font-smoothing: antialiased; */
-  /* -moz-osx-font-smoothing: grayscale; */
-  text-align: center;
-}
+
 .quote {
   background-color: rgb(23, 112, 112);
-  padding: 2px;
+  padding: 3px;
+  /* box-shadow: 5px 9px 11px -8px rgba(0, 0, 0, 0.5); */
 }
 .quote p {
   color: rgb(255, 255, 255);
   font-size: 15px;
   font-style: italic;
+  text-align: center;
 }
+button:hover:enabled {
+  cursor: pointer;
+}
+
 footer {
   padding: 15px;
   background-color: rgba(56, 21, 13, 0.534);
-  margin-top: 20px;
+  margin-top: 15px;
 }
 footer p {
   margin: 0;
   text-align: center;
   color: white;
+}
+@media screen and (max-width: 590px) {
+  footer {
+    padding: 10px;
+  }
+}
+/* width */
+::-webkit-scrollbar {
+  width: 5px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #888;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
 }
 </style>

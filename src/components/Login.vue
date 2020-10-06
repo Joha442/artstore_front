@@ -3,9 +3,19 @@
     <h1>
       <i class="fas fa-user"></i>
     </h1>
-    <input type="text" v-model="username" placeholder="Username" class="forms" />
-    <input type="password" v-model="password" placeholder="Password" class="forms" />
-    <p v-if="error" class="error">{{error}}</p>
+    <input
+      type="text"
+      v-model="username"
+      placeholder="Username"
+      class="forms"
+    />
+    <input
+      type="password"
+      v-model="password"
+      placeholder="Password"
+      class="forms"
+    />
+    <p v-if="error" class="error">{{ error }}</p>
     <button class="button" @click="login">PRIJAVA</button>
     <div class="register">
       <p>Nemate nalog?</p>
@@ -73,9 +83,9 @@ h1 {
 .forms {
   font-family: FontAwesome, Arial, Helvetica, sans-serif;
   display: block;
-  margin: 20px;
+  margin: 20px auto;
   padding: 5px;
-  width: 250px;
+  width: 80%;
   height: 25px;
   background-color: rgba(56, 21, 13, 0.274);
   /* background-color: rgba(156, 116, 98, 0.185); */
@@ -83,12 +93,11 @@ h1 {
   outline: none;
 }
 .button {
-  width: 263px;
+  width: 84%;
   height: 35px;
-  /* margin-bottom: 10px; */
+  margin-bottom: 10px;
   color: rgb(255, 255, 255);
   background-color: rgba(56, 21, 13, 0.534);
-  padding: 5px;
   border: none;
   box-shadow: 3px 3px 3px 0px rgba(0, 0, 0, 0.699);
   outline: none;

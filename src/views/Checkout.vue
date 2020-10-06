@@ -1,50 +1,44 @@
 <template>
   <div class="order">
-    <h1>Vaša korpa</h1>
-    <div class="container" v-if="cart.length">
-      <div class="imgtitle">
-        <div class="image" />
-        <div class="title" />
+    <h1>KORPA</h1>
+    <div v-if="!cart.length" class="empty-cart">
+      <div>
+        <span><i class="fas fa-shopping-cart"></i></span>
+        <span class="number-items">{{ numberOfItems }}</span>
       </div>
-      <div class="qtyprice">
-        <div class="price">Cena</div>
-        <div class="qty">Količina</div>
-        <div class="total">Ukupno</div>
-        <div class="delete"></div>
-      </div>
-    </div>
-    <div v-if="!cart.length">
-      <i class="fas fa-shopping-cart"></i>
-      <span class="number-items">{{numberOfItems}}</span>
-      <p class="empty-cart">Vasa korpa je prazna.</p>
+      <p>Vaša korpa je prazna.</p>
       <button class="cart" @click="showProducts">POGLEDAJTE PROIZVODE</button>
     </div>
     <CartItem
       v-for="item in cart"
       :key="item.pro_id"
       :item="item"
-      @qty-increment=" quantityIncrement"
-      @qty-decrement=" quantityDecrement"
-      @delete-row=" deleteRow"
+      @qty-increment="quantityIncrement"
+      @qty-decrement="quantityDecrement"
+      @delete-row="deleteRow"
     />
+    <p class="totals" v-if="sum">
+      UKUPAN IZNOS:
+      <span>EUR {{ sum }},00</span>
+    </p>
     <div class="sum" v-if="sum">
-      <p>
-        UKUPAN IZNOS:
-        <span>
-          {{sum}}
-          <i class="fas fa-euro-sign"></i>
-        </span>
-      </p>
-      <button class="cart" @click="$emit('open-modal','checkout' )">POTVRDI PORUDŽBINU</button>
-    </div>
-    <div class="btn" v-if="sum">
       <button class="cart" @click="showProducts">
         <i class="fas fa-caret-left"></i>
-        NASLOVNA STRANA
+        NASTAVITE KUPOVINU
       </button>
-      <button class="cart del" @click="$emit('delete-all')">
-        <i class="fas fa-trash"></i>
-      </button>
+      <div class="but-container">
+        <button class="cart del" @click="$emit('delete-all')">
+          <i class="fas fa-trash"></i>
+        </button>
+        <div>
+          <button class="cart confirm" @click="$emit('open-modal', 'checkout')">
+            POTVRDI PORUDŽBINU
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="items">
+      <!-- <button @click="fetchitems">ff</button> -->
     </div>
   </div>
 </template>
@@ -91,67 +85,58 @@ export default {
     showProducts() {
       router.push({ path: "/" });
     },
+    // fetchitems(){
+    //  axios
+    //     .get("http://localhost:3000/items?item_id=" + this.pro_id)
+    //     .then((res) => {
+
+    //     });
+    // },
+    // }
   },
 };
 </script>
 <style scoped>
-.container {
+.order {
+  min-height: 85vh;
+}
+h1 {
+  padding: 20px;
+  color: rgb(71, 68, 68);
+  font-weight: normal;
+  text-align: center;
+  font-size: 22px;
+}
+.empty-cart {
   display: flex;
-  flex-direction: row;
-  justify-content: space-between;
+  flex-direction: column;
+  text-align: center;
+}
+.empty-cart p {
   padding: 10px;
-  margin: 0 auto;
-  width: 90%;
 }
-.imgtitle {
-  display: flex;
-  flex-direction: row;
-}
-.image {
-  width: 250px;
-}
-.title {
-  text-align: left;
-  margin: auto 10px;
-  font-size: 20px;
-}
-.qtyprice {
-  display: flex;
-}
-.price {
-  margin: auto 10px;
-}
-.qty {
-  margin: auto 10px;
-}
-.total {
-  margin: auto 10px;
-}
-.delete {
-  margin: auto 10px;
+.empty-cart button {
+  margin: 20px auto;
 }
 .sum {
-  text-align: right;
-  margin: 30px 280px;
-  padding: 10px;
-  /* background-color: rgba(56, 21, 13, 0.1); */
-}
-.sum p {
-  margin: 10px;
-  color: rgba(0, 0, 0, 0.925);
-}
-.sum span {
-  font-size: 25px;
-  font-weight: bold;
-  color: black;
-}
-.btn {
+  width: 90%;
   display: flex;
-  justify-content: flex-end;
-  margin: 0 280px 0 0;
+  margin: 10px auto;
+  justify-content: space-between;
 }
-.btn button {
-  margin: 10px;
+.totals {
+  width: 90%;
+  margin: 70px auto 10px;
+  color: rgba(0, 0, 0, 0.925);
+  text-align: right;
+  font-size: 18px;
+}
+.totals span {
+  font-weight: bold;
+  font-size: 25px;
+}
+.but-container {
+  display: flex;
 }
 .cart {
   color: rgb(255, 255, 255);
@@ -162,7 +147,9 @@ export default {
   width: 250px;
   outline: none;
   text-align: center;
+  margin: 10px 0;
 }
+
 .cart:active {
   /* margin-top: -10px; */
   opacity: 0.85;
@@ -175,7 +162,13 @@ export default {
   color: rgb(23, 112, 112);
 }
 .del {
-  width: 50px;
+  margin-right: 5px;
+  width: 80px;
+  /* background-color: rgba(255, 0, 0, 1); */
+  background-color: rgba(231, 57, 18, 0.534);
+}
+.del:hover {
+  background-color: rgb(255, 0, 0);
 }
 .number-items {
   display: inline-block;
@@ -185,5 +178,29 @@ export default {
   border-radius: 999px;
   margin: 10px;
   width: 70px;
+}
+.confirm {
+  background-color: rgba(0, 128, 0, 0.726);
+}
+.confirm:hover {
+  background-color: rgba(0, 128, 0, 0.692);
+}
+@media screen and (max-width: 760px) {
+  .totals {
+    text-align: left;
+    margin-left: 35px;
+  }
+  .sum {
+    flex-direction: column;
+    justify-items: left;
+  }
+}
+@media screen and (max-width: 540px) {
+  .sum {
+    width: 95%;
+  }
+  .totals span {
+    font-size: 22px;
+  }
 }
 </style>

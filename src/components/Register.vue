@@ -3,15 +3,31 @@
     <h1>
       <i class="fas fa-user-plus"></i>
     </h1>
-    <input type="text" v-model="username" placeholder="Username" class="forms" />
+    <input
+      type="text"
+      v-model="username"
+      placeholder="Username"
+      class="forms"
+    />
     <p v-if="errorUsername" class="error">{{ errorUsername }}</p>
-    <input type="password" v-model="password" placeholder="Password" class="forms" />
-    <input type="password" v-model="confirmPassword" placeholder="Confirm Password" class="forms" />
-    <p v-if="errorPassword" class="error">{{errorPassword}}</p>
+    <input
+      type="password"
+      v-model="password"
+      placeholder="Password"
+      class="forms"
+    />
+    <input
+      type="password"
+      v-model="confirmPassword"
+      placeholder="Confirm Password"
+      class="forms"
+    />
+    <p v-if="errorPassword" class="error">{{ errorPassword }}</p>
     <button class="forms button" @click="register">REGISTRACIJA</button>
-    <p
-      class="pass"
-    >*Šifra mora da sadrži najmanje jedno malo slovo, najmanje jedno veliko slovo, najmanje 8 karaktera i najmanje jedan broj</p>S
+    <p class="pass">
+      *Šifra mora da sadrži najmanje jedno malo slovo, najmanje jedno veliko
+      slovo, najmanje 8 karaktera i najmanje jedan broj
+    </p>
   </div>
 </template>
 <script>
@@ -88,16 +104,16 @@ h1 {
 .forms {
   font-family: FontAwesome, Arial, Helvetica, sans-serif;
   display: block;
-  margin: 20px;
+  margin: 20px auto;
   padding: 5px;
-  width: 250px;
+  width: 80%;
   height: 25px;
   background-color: rgba(56, 21, 13, 0.274);
   border: rgba(56, 21, 13, 0.068) 1px solid;
   outline: none;
 }
 .button {
-  width: 263px;
+  width: 84%;
   height: 35px;
   margin-bottom: 30px;
   color: rgb(255, 255, 255);

@@ -3,18 +3,26 @@
     <div class="modal">
       <button @click="$emit('close-modal')" class="closeBtn">X</button>
       <Login
-        v-if="whichForm==='login'"
+        v-if="whichForm === 'login'"
         @close-modal="$emit('close-modal')"
         @success="continueIDEmit"
         @current-user="continueUsernameEmit"
         @open-register="$emit('open-register')"
       />
-      <Register v-if="whichForm==='register'" @open-login="$emit('open-login')" />
-      <div class="logout" v-if="whichForm==='logout'">
-        <p>Da li ste sigurni?</p>
+      <Register
+        v-if="whichForm === 'register'"
+        @open-login="$emit('open-login')"
+      />
+      <div class="logout" v-if="whichForm === 'logout'">
+        <p>Da li ste sigurni da želite da se odjavite?</p>
         <button @click="logout" class="logoutBtn">Da</button>
       </div>
-      <OrderForm v-if="whichForm==='checkout'" :cart="cart" />
+      <OrderForm
+        v-if="whichForm === 'checkout'"
+        :cart="cart"
+        @close-modal="$emit('close-modal')"
+        @clear-cart="$emit('clear-cart')"
+      />
     </div>
   </div>
 </template>
@@ -34,6 +42,7 @@ export default {
       this.$emit("close-modal");
       this.$emit("logout");
       localStorage.removeItem("user_id");
+      localStorage.removeItem("username");
     },
     continueIDEmit(user_id) {
       this.$emit("success", user_id);
@@ -60,12 +69,13 @@ export default {
 .modal {
   width: 300px;
   position: fixed;
-  left: 40%;
   z-index: 1000;
   background-color: rgb(255, 255, 255);
-  /* top: -400px; */
-  /* animation: drop 0.8s ease forwards; */
   animation: modalopen 1.5s;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
 }
 @keyframes modalopen {
   from {
@@ -75,22 +85,10 @@ export default {
     opacity: 1;
   }
 }
-/* @keyframes drop {
-  0% {
-    opacity: 0;
-  }
-  70% {
-    transform: translateY(700px);
-  }
-  100% {
-    transform: translateY(650px);
-    opacity: 1;
-  }
-} */
 .closeBtn {
   position: relative;
   top: 10px;
-  left: 110px;
+  left: 40%;
   width: 40px;
   color: rgb(255, 255, 255);
   background-color: rgba(56, 21, 13, 0.534);
@@ -108,17 +106,23 @@ export default {
 }
 .logout {
   width: 300px;
-  height: 80px;
+  /* padding: 30px; */
+}
+.logout p {
+  margin: 40px 0 20px;
+  text-align: center;
+  font-size: 18px;
+  /* border: black 2px solid; */
 }
 .logoutBtn {
-  width: 60px;
-  margin-top: 15px;
+  width: 80px;
   color: rgb(255, 255, 255);
   background-color: rgba(56, 21, 13, 0.534);
   padding: 5px;
   border: none;
   box-shadow: 3px 3px 3px 0px rgba(0, 0, 0, 0.699);
   outline: none;
+  margin-bottom: 20px;
 }
 .logout:active {
   margin-top: -1px;
