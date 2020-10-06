@@ -1,14 +1,14 @@
 <template>
   <div class="container">
+    <button class="delete-product" @click="deleteProduct" v-if="userLevel == 1">
+      <i class="fas fa-trash"></i>
+    </button>
     <router-link :to="{ name: 'ShowMore', params: { pro_id: product.pro_id } }">
       <img :src="product.pro_image" />
       <h1>{{ product.pro_title }}</h1>
       <h2>{{ product.aut_fullName }}</h2>
       <div class="price-comment">
-        <h3>
-          {{ product.pro_price }}.00 EUR
-          <!-- <i class="fas fa-euro-sign"></i> -->
-        </h3>
+        <h3>{{ product.pro_price }}.00 EUR</h3>
         <span>
           <i class="far fa-comment-alt">{{ " " + numberOfComments }}</i>
         </span>
@@ -20,7 +20,7 @@
 import axios from "axios";
 export default {
   name: "Product",
-  props: ["product"],
+  props: ["product", "userLevel"],
   data() {
     return {
       numberOfComments: 0,
@@ -33,9 +33,31 @@ export default {
         this.numberOfComments = res.data.data;
       });
   },
+  methods: {
+    deleteProduct() {
+      axios
+        .delete("http://localhost:3000/products?pro_id=" + this.product.pro_id)
+        .then((res) => {
+          console.log(res.data);
+          this.$emit("delete-product", this.product.pro_id);
+        });
+    },
+  },
 };
 </script>
 <style scoped>
+.delete-product {
+  position: absolute;
+  top: 3px;
+  right: 3px;
+  background-color: rgba(56, 21, 13, 0.534);
+  color: white;
+  font-size: 18px;
+  padding: 7px;
+}
+.delete-product:hover {
+  background-color: red;
+}
 .container {
   width: 100%;
   border-bottom: rgba(156, 116, 98, 0.185) 2px solid;
@@ -44,6 +66,7 @@ export default {
   background-color: rgba(156, 116, 98, 0.185);
   transition: 1s;
   text-align: center;
+  position: relative;
 }
 img {
   width: 100%;
