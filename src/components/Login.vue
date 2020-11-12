@@ -37,10 +37,10 @@ export default {
   methods: {
     login() {
       this.error = "";
-      // if (this.username.length < 6 || this.password.length < 8) {
-      //   this.error = "Neispravni podaci";
-      //   return;
-      // }
+      if (this.username.length < 6 || this.password.length < 8) {
+        this.error = "Neispravni podaci";
+        return;
+      }
       if (this.username.length) {
         (this.error = ""),
           axios

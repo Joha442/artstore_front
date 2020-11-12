@@ -119,7 +119,12 @@ export default {
     productIncrement(pro_id) {
       for (let i = 0; i < this.cart.length; i++) {
         if (this.cart[i].pro_id == pro_id) {
-          this.cart[i].quantity++;
+          console.log(this.cart[i].pro_qty);
+          if (this.cart[i].quantity >= this.cart[i].pro_qty) {
+            return;
+          } else {
+            this.cart[i].quantity++;
+          }
         }
       }
       this.itemsNumber();
@@ -158,7 +163,6 @@ h3 {
 .quote {
   background-color: rgb(23, 112, 112);
   padding: 3px;
-  /* box-shadow: 5px 9px 11px -8px rgba(0, 0, 0, 0.5); */
 }
 .quote p {
   color: rgb(255, 255, 255);
